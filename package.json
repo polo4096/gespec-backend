@@ -1,0 +1,23 @@
+{
+  "name": "gespec-backend",
+  "version": "1.0.0",
+  "description": "Côté serveur pour le module de gestion des spécifications",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "\u0016https://github.com/polo4096/gespec-backend"
+  },
+  "keywords": [
+    "specs"
+  ],
+  "author": "pghazal",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.7"
+  }
+}
