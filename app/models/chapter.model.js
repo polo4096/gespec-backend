@@ -9,10 +9,14 @@ const chapterSchema = mongoose.Schema({
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Topic"
+        }
+    ],
+    parentChapter : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Chapter"
     }
-    ]
 }, {
     timestamps: true
 });
 
-module.exports = mongoose.model('chapter', chapterSchema);
+module.exports = mongoose.model('Chapter', chapterSchema);
