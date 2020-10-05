@@ -31,8 +31,8 @@ app.get('/', (req, res) => {
     res.json({"message": "Welcome to Gespec application. Take your CAs quickly."});
 });
 
-// Require Specs routes
-require('./app/routes/specs.routes.js')(app);
+// Require chapter routes
+require('./app/routes/chapter.routes.js')(app);
 
 // listen for requests
 app.listen(3000, () => {

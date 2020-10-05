@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-const SpecsSchema = mongoose.Schema({
+const chapterSchema = mongoose.Schema({
     title: String,
     content: String
 }, {
     timestamps: true
 });
 
-module.exports = mongoose.model('Specs', SpecsSchema);
+module.exports = mongoose.model('chapter', chapterSchema);
