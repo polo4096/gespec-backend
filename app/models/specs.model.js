@@ -7,4 +7,4 @@ const SpecsSchema = mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('Note', SpecsSchema);
+module.exports = mongoose.model('Specs', SpecsSchema);
