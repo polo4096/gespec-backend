@@ -1,35 +1,46 @@
 const Chapter = require('../models/chapter.model.js');
+const Topic = require('../models/topic.model.js');
 
-// Create and Save a new chapter file
+// Create and Save a new topic file
 exports.create = (req, res) => {
     // Validate request
-    console.log(req)
     if(!req.body.title) {
         return res.status(400).send({
-            message: "chapter file content can not be empty haha"
+            message: "topic file content can not be empty"
         });
     }
 
-    // Create a chapter file
-    const chapter = new Chapter({
-        title: req.body.title || "Untitled chapter file", 
-        type: req.body.type,
-        version: req.body.version,
-        standard_version: req.body.standard_version,
+    // Create a topic file
+    const topic = new Topic({
+        title: req.body.title || "Untitled topic file", 
+        schema: req.body.schema,
+        model: req.body.model
     });
 
-    // Save chapter file in the database
+    // Save topic file in the database
     chapter.save()
     .then(data => {
         res.send(data);
+        Chapter.findByIdAndUpdate(
+            chapterId,
+            {
+                $push: {
+                    topics: docComment._id
+                }
+            },
+            {
+                new: true,
+                useFindAndModify: false
+            }
+        )
     }).catch(err => {
         res.status(500).send({
-            message: err.message || "Some error occurred while creating the chapter file."
+            message: err.message || "Some error occurred while creating the topic file."
         });
     });
 };
-/*
-// Retrieve and return all chapter files from the database.
+
+/* // Retrieve and return all chapter files from the database.
 exports.findAll = (req, res) => {
     Chapter.find()
     .then(chapter => {
