@@ -47,15 +47,27 @@ const run = async function() {
 
   chapter = await createTopic(chapter._id, {
     title: "TEXT 1",
-    schema: {},
+    formSchema: {},
     model: {}
   });
   console.log("\n>> Chapter:\n", chapter);
 
   chapter = await createTopic(chapter._id, {
-    title: "TEXT 42",
-    schema: {},
-    model: {}
+    title: "TEXT 420",
+    formSchema: {
+        fields : [
+            {
+            type : "textbox",
+            placeholder : "Hello je suis une textbox"
+        },{
+            type : "checkbox",
+            placeholder : "Hello je suis une checkbox"
+        }
+    ]
+    },
+    model: {
+
+    }
   });
   console.log("\n>> Chapter:\n", chapter);
 };
