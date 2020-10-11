@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const topicSchema = mongoose.Schema({
-    title   : String,
-    schema  : Object,
-    model   : Object,
+    title       : String,
+    formSchema  : Object,
+    model       : Object,
     /* parentChapter : {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Chapter"

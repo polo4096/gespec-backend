@@ -14,6 +14,53 @@ app.use(bodyParser.json())
 const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose');
 
+const Chapter = require("./app/models/chapter.model");
+const Topic = require("./app/models/topic.model");
+
+const createChapter = function(chapter) {
+  return Chapter.create(chapter).then(docChapter => {
+    console.log("\n>> Created new Chapter :\n", docChapter);
+    return docChapter;
+  });
+};
+
+const createTopic = function(chapterId, topic) {
+    return Topic.create(topic).then(docTopic => {
+      console.log("\n>> Created new Topic:\n", docTopic);
+  
+      return Chapter.findByIdAndUpdate(
+        chapterId,
+        { $push: { topics: docTopic._id } },
+        { new: true, useFindAndModify: false }
+      );
+    });
+  };
+
+
+const run = async function() {
+  var chapter = await createChapter({
+    "title": "Mon premier chapitre",
+    "type": "GTA",
+    "version": "4.2",
+    "standard_version": "1.3"
+  });
+
+  chapter = await createTopic(chapter._id, {
+    title: "TEXT 1",
+    schema: {},
+    model: {}
+  });
+  console.log("\n>> Chapter:\n", chapter);
+
+  chapter = await createTopic(chapter._id, {
+    title: "TEXT 42",
+    schema: {},
+    model: {}
+  });
+  console.log("\n>> Chapter:\n", chapter);
+};
+
+
 mongoose.Promise = global.Promise;
 
 // Connecting to the database
@@ -38,3 +85,5 @@ require('./app/routes/chapter.routes.js')(app);
 app.listen(3000, () => {
     console.log("Server is listening on port 3000");
 });
+
+run();
