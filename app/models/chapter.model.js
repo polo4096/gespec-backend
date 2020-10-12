@@ -11,11 +11,11 @@ const chapterSchema = mongoose.Schema({
             ref: "Topic"
         }
     ],
-    /*parentChapter : {
+    parentChapter : {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Chapter"
     }
-    */
+    
 }, {
     timestamps: true
 });

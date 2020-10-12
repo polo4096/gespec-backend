@@ -28,7 +28,7 @@ exports.create = (req, res) => {
         });
     });
 };
-/*
+
 // Retrieve and return all chapter files from the database.
 exports.findAll = (req, res) => {
     Chapter.find()
@@ -66,7 +66,7 @@ exports.findOne = (req, res) => {
 // Update a chapter file identified by the chapterId in the request
 exports.update = (req, res) => {
     // Validate Request
-    if(!req.body.content) {
+    if(!req.body) {
         return res.status(400).send({
             message: "chapter file content can not be empty"
         });
@@ -74,9 +74,14 @@ exports.update = (req, res) => {
 
     // Find chapter file and update it with the request body
     Chapter.findByIdAndUpdate(req.params.chapterId, {
-        title: req.body.title || "Untitled chapter file",
-        content: req.body.content
-    }, {new: true})
+        title           : req.body.title || "Untitled chapter file", 
+        type            : req.body.type,
+        version         : req.body.version,
+        standard_version: req.body.standard_version,
+        topics          : req.body.topics
+    },
+    { $set: req.body,
+      new: true})
     .then(chapter => {
         if(!chapter) {
             return res.status(404).send({
@@ -116,4 +121,4 @@ exports.delete = (req, res) => {
             message: "Could not delete chapter file with id " + req.params.chapterId
         });
     });
-}; */
+}; 
