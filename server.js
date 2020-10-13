@@ -12,7 +12,10 @@ app.use(bodyParser.json())
 
 // Configuring the database
 const dbConfig = require('./config/database.config.js');
+
 const mongoose = require('mongoose');
+const vermongo = require('mongoose-vermongo');
+mongoose.Promise = require('bluebird');
 
 const Chapter = require("./app/models/chapter.model");
 const Topic = require("./app/models/topic.model");
