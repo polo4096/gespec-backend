@@ -27,6 +27,13 @@ const createChapter = function(chapter) {
   });
 };
 
+const deleteChapter = function(chapterId) {
+  return Chapter.delete(chapterId).then( (docChapter) => {
+    console.log("\n>> Deleted new Chapter :\n", docChapter)
+
+  })
+}
+
 const createTopic = function(chapterId, topic) {
     return Topic.create(topic).then(docTopic => {
       console.log("\n>> Created new Topic:\n", docTopic);
@@ -52,14 +59,12 @@ const run = async function() {
   var chapter = await createChapter({
     "title": "Mon premier chapitre",
     "type": "GTA",
-    "version": "4.2",
     "standard_version": "1.3"
   });
 
   var chapter2 = await createChapter({
     "title": "Mon second chapitre",
     "type": "GTA",
-    "version": "4.2",
     "standard_version": "1.3"
   });
 
@@ -89,7 +94,10 @@ const run = async function() {
 
     }
   });
-  console.log("\n>> Chapter:\n", chapter);
+  console.log("\n>> OUAIS:\n", chapter);
+  deleteChapter(chapter2._id);
+  //console.log("OUAIS", chapter2)
+
 };
 
 

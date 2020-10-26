@@ -14,7 +14,6 @@ exports.create = (req, res) => {
     const chapter = new Chapter({
         title: req.body.title || "Untitled chapter file", 
         type: req.body.type,
-        version: req.body.version,
         standard_version: req.body.standard_version,
     });
 
@@ -76,7 +75,6 @@ exports.update = (req, res) => {
     Chapter.findByIdAndUpdate(req.params.chapterId, {
         title           : req.body.title || "Untitled chapter file", 
         type            : req.body.type,
-        version         : req.body.version,
         standard_version: req.body.standard_version,
         topics          : req.body.topics
     },
