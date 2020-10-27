@@ -14,8 +14,7 @@ app.use(bodyParser.json())
 const dbConfig = require('./config/database.config.js');
 
 const mongoose = require('mongoose');
-const vermongo = require('mongoose-vermongo');
-mongoose.Promise = require('bluebird');
+
 
 const Chapter = require("./app/models/chapter.model");
 const Topic = require("./app/models/topic.model");
@@ -52,14 +51,14 @@ const run = async function() {
   var chapter = await createChapter({
     "title": "Mon premier chapitre",
     "type": "GTA",
-    "version": "4.2",
+    "_version": 1,
     "standard_version": "1.3"
   });
 
   var chapter2 = await createChapter({
     "title": "Mon second chapitre",
     "type": "GTA",
-    "version": "4.2",
+    "_version": 1,
     "standard_version": "1.3"
   });
 
@@ -106,6 +105,23 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
+mongoose.connection.on('connected', () => {
+    var chapter = new Chapter({
+        "title": "Mon premier chapitre",
+        "type": "GTA",
+        "standard_version": "1.3"
+    });
+    createTopic(chapter._id, {
+        title: "Topic1",
+        formSchema: {},
+        model: {}
+    });
+    chapter.save()
+        .then(() => { chapter.title = "test 2"; return chapter.save(); })
+        .then(() => { process.exit(); })
+        .catch(() => { console.log(err); process.exit(); })
+});
+
 // define a simple route
 app.get('/', (req, res) => {
     res.json({"message": "Welcome to Gespec application. Take your CAs quickly."});
@@ -118,4 +134,4 @@ require('./app/routes/chapter.routes.js')(app);
 app.listen(3000, () => {
     console.log("Server is listening on port 3000");
 });
-run();
+//run();

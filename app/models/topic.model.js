@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+var vermongo = require('mongoose-vermongo');
+mongoose.Promise = require('bluebird');
 
 const topicSchema = mongoose.Schema({
     title       : String,
@@ -11,5 +13,6 @@ const topicSchema = mongoose.Schema({
 }, {
     timestamps: true
 });
+
 
 module.exports = mongoose.model('Topic', topicSchema);

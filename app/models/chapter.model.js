@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
+var vermongo = require('mongoose-vermongo');
+mongoose.Promise = require('bluebird');
 
 const chapterSchema = mongoose.Schema({
     title: String,
     type: String,
-    version: String,
-    standard_version: String,
+    standard_version: Number,
     topics : [
         {
             type: mongoose.Schema.Types.ObjectId,
@@ -19,5 +20,8 @@ const chapterSchema = mongoose.Schema({
 }, {
     timestamps: true
 });
+
+chapterSchema.plugin(vermongo, "chapters.vermongo");
+
 
 module.exports = mongoose.model('Chapter', chapterSchema);
