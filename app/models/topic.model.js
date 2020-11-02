@@ -13,6 +13,6 @@ const topicSchema = mongoose.Schema({
 }, {
     timestamps: true
 });
-
+topicSchema.plugin(vermongo, "topics.vermongo");
 
 module.exports = mongoose.model('Topic', topicSchema);

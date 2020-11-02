@@ -19,59 +19,86 @@ const mongoose = require('mongoose');
 const Chapter = require("./app/models/chapter.model");
 const Topic = require("./app/models/topic.model");
 
-const createChapter = function(chapter) {
+const createChapter = (chapter) => {
   return Chapter.create(chapter).then(docChapter => {
     console.log("\n>> Created new Chapter :\n", docChapter);
     return docChapter;
   });
 };
 
-const createTopic = function(chapterId, topic) {
-    return Topic.create(topic).then(docTopic => {
-      console.log("\n>> Created new Topic:\n", docTopic);
-  
-      return Chapter.findByIdAndUpdate(
-        chapterId,
-        { $push: { topics: docTopic._id } },
-        { new: true, useFindAndModify: false }
-      );
-    });
+const createTopic = (topic) => {
+    return Topic.create(topic)
   };
 
-  const addParentToChapter = function(childId, parentId) {
-    return Chapter.findByIdAndUpdate(
-      childId,
-      { parentChapter: parentId },
-      { new: true, useFindAndModify: false }
-    );
+const addTopicToChapter = (topic, chapter) => {
+    chapter.topics.push(topic._id)
+    console.log("Updated chapter", chapter)
+    return chapter;
+}
+
+
+  const addParentToChapter = (child, parent) => {
+    child.parentChapter = parent._id
+      console.log("Updated chapter parent", child)
+    return child;
   };
 
 
-const run = async function() {
-  var chapter = await createChapter({
-    "title": "Mon premier chapitre",
-    "type": "GTA",
-    "_version": 1,
-    "standard_version": "1.3"
-  });
+const run = async () => {
+    try {
+        const chapter = await createChapter({
+            "title": "Mon premier chapitre",
+            "type": "GTA",
+            "_version": 1,
+            "standard_version": "1.3"
+        });
+        const chapter2 = await createChapter({
+            "title": "Mon second chapitre",
+            "type": "PAIE",
+            "_version": 1,
+            "standard_version": "1.3"
+            });
+        const topic = await createTopic({
+            title: "Topic1",
+            formSchema: {},
+            model: {}
+        });
+        console.log("TOPICC", topic )
+        addTopicToChapter(topic, chapter);
+        await chapter.save();
+        addTopicToChapter(topic, chapter);
+        await chapter.save();
+        await addParentToChapter(chapter2,chapter);
+        await chapter2.save();
+        const unchapitre = await Chapter.findById(chapter2._id)
+        console.log("Chapitres :", unchapitre )
+    }catch (e) {
+        console.log(e)
+    }
 
-  var chapter2 = await createChapter({
+
+
+    //console.log("caca", chapter2)
+    process.exit()
+
+
+
+
+
+    /*var chapter2 = await createChapter({
     "title": "Mon second chapitre",
     "type": "GTA",
     "_version": 1,
     "standard_version": "1.3"
-  });
+    });
 
-  chapter = await addParentToChapter(chapter._id,chapter2._id);
+    chapter = await addParentToChapter(chapter._id,chapter2._id);
+    console.log("CACA 1")
 
-  chapter = await createTopic(chapter._id, {
-    title: "Topic1",
-    formSchema: {},
-    model: {}
-  });
-  console.log("\n>> Chapter:\n", chapter);
+    console.log("CACA 1")
+    //console.log("\n>> Chapter:\n", chapter);
 
-  chapter = await createTopic(chapter._id, {
+    chapter = await createTopic(chapter._id, {
     title: "Topic2",
     formSchema: {
         fields : [
@@ -87,10 +114,9 @@ const run = async function() {
     model: {
 
     }
-  });
-  console.log("\n>> Chapter:\n", chapter);
+    });
+    //console.log("\n>> Chapter:\n", chapter);*/
 };
-
 
 mongoose.Promise = global.Promise;
 
@@ -105,22 +131,24 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-mongoose.connection.on('connected', () => {
+/*mongoose.connection.on('connected', () => {
     var chapter = new Chapter({
         "title": "Mon premier chapitre",
         "type": "GTA",
         "standard_version": "1.3"
     });
-    createTopic(chapter._id, {
-        title: "Topic1",
-        formSchema: {},
-        model: {}
-    });
+    console.log("CHAPTER 1 : ", chapter);
     chapter.save()
+        .then(() => { createTopic(chapter._id, {
+            title: "Topic1",
+            formSchema: {},
+            model: {}
+            });
+        })
         .then(() => { chapter.title = "test 2"; return chapter.save(); })
         .then(() => { process.exit(); })
         .catch(() => { console.log(err); process.exit(); })
-});
+});*/
 
 // define a simple route
 app.get('/', (req, res) => {
@@ -134,4 +162,4 @@ require('./app/routes/chapter.routes.js')(app);
 app.listen(3000, () => {
     console.log("Server is listening on port 3000");
 });
-//run();
+run();
