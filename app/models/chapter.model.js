@@ -6,12 +6,7 @@ const chapterSchema = mongoose.Schema({
     title: String,
     type: String,
     standard_version: Number,
-    topics : [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Topic"
-        }
-    ],
+    topics : [],
     parentChapter : {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Chapter"

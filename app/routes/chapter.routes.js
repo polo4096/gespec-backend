@@ -10,8 +10,13 @@ module.exports = (app) => {
     // Retrieve a single chapter file with chapterId
     app.get('/chapter/:chapterId', chapter.findOne);
 
+    // Retrieve all old chapter files with chapterId
+    app.get('/old_chapter/:chapterId', chapter.findVersions);
+
+
+
     // Update a chapter file with chapterId
-    app.put('/chapter/:chapterId', chapter.update);
+    app.post('/chapter/:chapterId', chapter.update);
 
     // Delete a chapter file with chapterId
     app.delete('/chapter/:chapterId', chapter.delete);

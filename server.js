@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors')
 
 // create express app
 const app = express();
@@ -9,11 +10,14 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json())
+app.use(cors())
 
 // Configuring the database
 const dbConfig = require('./config/database.config.js');
 
 const mongoose = require('mongoose');
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
 
 
 const Chapter = require("./app/models/chapter.model");
@@ -31,7 +35,7 @@ const createTopic = (topic) => {
   };
 
 const addTopicToChapter = (topic, chapter) => {
-    chapter.topics.push(topic._id)
+    chapter.topics.push(topic)
     console.log("Updated chapter", chapter)
     return chapter;
 }
@@ -58,20 +62,47 @@ const run = async () => {
             "_version": 1,
             "standard_version": "1.3"
             });
-        const topic = await createTopic({
-            title: "Topic1",
-            formSchema: {},
+
+        const topic1 = {
+            title: "Nom",
+            schema: {
+                fields: [
+                    {
+                        type: 'input',
+                        inputType: 'text',
+                        label: 'ID (disabled text field)',
+                        model: 'lastName',
+                        readonly: true,
+                        disabled: true
+                    }
+                ]
+            },
             model: {}
-        });
-        console.log("TOPICC", topic )
-        addTopicToChapter(topic, chapter);
+        };
+        const topic2 = {
+            title: "Prénom",
+            schema: {
+                fields: [
+                    {
+                        type: 'input',
+                        inputType: 'text',
+                        label: 'ID (disabled text field)',
+                        model: 'firstName',
+                        readonly: true,
+                        disabled: true
+                    }
+                ]
+            },
+            model: {}
+        };
+        addTopicToChapter(topic1, chapter);
         await chapter.save();
-        addTopicToChapter(topic, chapter);
+        addTopicToChapter(topic2, chapter);
         await chapter.save();
         await addParentToChapter(chapter2,chapter);
         await chapter2.save();
         const unchapitre = await Chapter.findById(chapter2._id)
-        console.log("Chapitres :", unchapitre )
+        console.log("Chapitre :", unchapitre )
     }catch (e) {
         console.log(e)
     }
@@ -79,7 +110,7 @@ const run = async () => {
 
 
     //console.log("caca", chapter2)
-    process.exit()
+    //process.exit()
 
 
 
@@ -124,8 +155,8 @@ mongoose.Promise = global.Promise;
 mongoose.connect(dbConfig.url, {
     useNewUrlParser: true,
     useFindAndModify: true
-}).then(() => {
-    console.log("Successfully connected to the database");    
+}).then((client) => {
+    console.log("Successfully connected to the database");
 }).catch(err => {
     console.log('Could not connect to the database. Exiting now...', err);
     process.exit();
@@ -162,4 +193,4 @@ require('./app/routes/chapter.routes.js')(app);
 app.listen(3000, () => {
     console.log("Server is listening on port 3000");
 });
-run();
+//run();
