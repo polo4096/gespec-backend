@@ -50,31 +50,101 @@ const addTopicToChapter = (topic, chapter) => {
 
 const run = async () => {
     try {
-        const chapter = await createChapter({
+        const chapter_prime = await createChapter({
             "title": "Primes",
-            "type": "Paie",
+            "type": "PAIE",
             "_version": 1,
             "standard_version": "1.3"
         });
         const chapter_prime_excep = await createChapter({
           "title": "Prime exceptionnelle",
-          "type": "Paie",
+          "type": "PAIE",
           "_version": 1,
           "standard_version": "1.3"
         });
         const chapter_prime_obj = await createChapter({
             "title": "Prime d'objectif",
-            "type": "Paie",
+            "type": "PAIE",
             "_version": 1,
             "standard_version": "1.3"
         });
+        const chapter_conge = await createChapter({
+          "title": "Gestion des congés payés",
+          "type": "PAIE",
+          "_version": 1,
+          "standard_version": "1.3"
+      });
+      const chapter_conge_acqui = await createChapter({
+          "title": "Règles d'acquisition",
+          "type": "PAIE",
+          "_version": 1,
+          "standard_version": "1.3"
+      });
+      const chapter_conge_prise = await createChapter({
+          "title": "Règles de prise",
+          "type": "PAIE",
+          "_version": 1,
+          "standard_version": "1.3"
+      });
+      const chapter_conge_valo = await createChapter({
+        "title": "Valorisation en paie des prises",
+        "type": "PAIE",
+        "_version": 1,
+        "standard_version": "1.3"
+      });
+      const chapter_abs = await createChapter({
+        "title": "Demandes d'absences",
+        "type": "SMART",
+        "_version": 1,
+        "standard_version": "1.3"
+      });
+      const chapter_abs_invent = await createChapter({
+        "title": "Inventaire des congés",
+        "type": "SMART",
+        "_version": 1,
+        "standard_version": "1.3"
+      });
+      const chapter_abs_calc = await createChapter({
+        "title": "Principe de calcul du solde dans le portail",
+        "type": "SMART",
+        "_version": 1,
+        "standard_version": "1.3"
+      });
+      const chapter_abs_sold = await createChapter({
+        "title": "Affichage des soldes",
+        "type": "SMART",
+        "_version": 1,
+        "standard_version": "1.3"
+      });
+      const chapter_abs_val = await createChapter({
+        "title": "Workflow de validation",
+        "type": "SMART",
+        "_version": 1,
+        "standard_version": "1.3"
+      });
 
-        
-        await chapter.save();
-        await addParentToChapter(chapter_prime_excep,chapter);
+        await chapter_prime.save();
+        await chapter_conge.save();
+        await chapter_abs.save();
+        await addParentToChapter(chapter_prime_excep,chapter_prime);
         await chapter_prime_excep.save();
-        await addParentToChapter(chapter_prime_obj,chapter);
+        await addParentToChapter(chapter_prime_obj,chapter_prime);
         await chapter_prime_obj.save();
+        await addParentToChapter(chapter_conge_acqui,chapter_conge);
+        await chapter_conge_acqui.save();
+        await addParentToChapter(chapter_conge_prise,chapter_conge);
+        await chapter_conge_prise.save();
+        await addParentToChapter(chapter_conge_valo,chapter_conge);
+        await chapter_conge_valo.save();
+        await addParentToChapter(chapter_abs_calc,chapter_abs);
+        await chapter_abs_calc.save();
+        await addParentToChapter(chapter_abs_invent,chapter_abs);
+        await chapter_abs_invent.save();
+        await addParentToChapter(chapter_abs_sold,chapter_abs);
+        await chapter_abs_sold.save();
+        await addParentToChapter(chapter_abs_val,chapter_abs);
+        await chapter_abs_val.save();
+
         //const unchapitre = await Chapter.findById(chapter2._id)
         //console.log("Chapitre :", unchapitre )
     }catch (e) {
