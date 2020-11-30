@@ -51,58 +51,32 @@ const addTopicToChapter = (topic, chapter) => {
 const run = async () => {
     try {
         const chapter = await createChapter({
-            "title": "Mon premier chapitre",
-            "type": "GTA",
+            "title": "Primes",
+            "type": "Paie",
             "_version": 1,
             "standard_version": "1.3"
         });
-        const chapter2 = await createChapter({
-            "title": "Mon second chapitre",
-            "type": "PAIE",
+        const chapter_prime_excep = await createChapter({
+          "title": "Prime exceptionnelle",
+          "type": "Paie",
+          "_version": 1,
+          "standard_version": "1.3"
+        });
+        const chapter_prime_obj = await createChapter({
+            "title": "Prime d'objectif",
+            "type": "Paie",
             "_version": 1,
             "standard_version": "1.3"
-            });
+        });
 
-        const topic1 = {
-            title: "Nom",
-            schema: {
-                fields: [
-                    {
-                        type: 'input',
-                        inputType: 'text',
-                        label: 'ID (disabled text field)',
-                        model: 'lastName',
-                        readonly: true,
-                        disabled: true
-                    }
-                ]
-            },
-            model: {}
-        };
-        const topic2 = {
-            title: "Prénom",
-            schema: {
-                fields: [
-                    {
-                        type: 'input',
-                        inputType: 'text',
-                        label: 'ID (disabled text field)',
-                        model: 'firstName',
-                        readonly: true,
-                        disabled: true
-                    }
-                ]
-            },
-            model: {}
-        };
-        addTopicToChapter(topic1, chapter);
+        
         await chapter.save();
-        addTopicToChapter(topic2, chapter);
-        await chapter.save();
-        await addParentToChapter(chapter2,chapter);
-        await chapter2.save();
-        const unchapitre = await Chapter.findById(chapter2._id)
-        console.log("Chapitre :", unchapitre )
+        await addParentToChapter(chapter_prime_excep,chapter);
+        await chapter_prime_excep.save();
+        await addParentToChapter(chapter_prime_obj,chapter);
+        await chapter_prime_obj.save();
+        //const unchapitre = await Chapter.findById(chapter2._id)
+        //console.log("Chapitre :", unchapitre )
     }catch (e) {
         console.log(e)
     }
@@ -193,4 +167,4 @@ require('./app/routes/chapter.routes.js')(app);
 app.listen(3000, () => {
     console.log("Server is listening on port 3000");
 });
-//run();
+run();
