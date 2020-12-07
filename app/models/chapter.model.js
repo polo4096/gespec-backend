@@ -5,6 +5,7 @@ mongoose.Promise = require('bluebird');
 const chapterSchema = mongoose.Schema({
     title: String,
     type: String,
+    tag: String,
     standard_version: Number,
     topics : [],
     parentChapter : {

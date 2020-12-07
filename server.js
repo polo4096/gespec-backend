@@ -22,6 +22,7 @@ const assert = require('assert');
 
 const Chapter = require("./app/models/chapter.model");
 const Topic = require("./app/models/topic.model");
+const VersionnedChapter = require("./app/models/VersionnedChapter.model");
 
 const createChapter = (chapter) => {
   return Chapter.create(chapter).then(docChapter => {
@@ -53,72 +54,84 @@ const run = async () => {
         const chapter_prime = await createChapter({
             "title": "Primes",
             "type": "PAIE",
+            "tag": "prime",
             "_version": 1,
             "standard_version": "1.3"
         });
         const chapter_prime_excep = await createChapter({
           "title": "Prime exceptionnelle",
           "type": "PAIE",
+          "tag": "prime",
           "_version": 1,
           "standard_version": "1.3"
         });
         const chapter_prime_obj = await createChapter({
             "title": "Prime d'objectif",
             "type": "PAIE",
+            "tag": "prime",
             "_version": 1,
             "standard_version": "1.3"
         });
         const chapter_conge = await createChapter({
           "title": "Gestion des congés payés",
           "type": "PAIE",
+          "tag": "congé",
           "_version": 1,
           "standard_version": "1.3"
       });
       const chapter_conge_acqui = await createChapter({
           "title": "Règles d'acquisition",
           "type": "PAIE",
+          "tag": "congé",
           "_version": 1,
           "standard_version": "1.3"
       });
       const chapter_conge_prise = await createChapter({
           "title": "Règles de prise",
           "type": "PAIE",
+          "tag": "congé",
           "_version": 1,
           "standard_version": "1.3"
       });
       const chapter_conge_valo = await createChapter({
         "title": "Valorisation en paie des prises",
         "type": "PAIE",
+        "tag": "congé",
         "_version": 1,
         "standard_version": "1.3"
       });
       const chapter_abs = await createChapter({
         "title": "Demandes d'absences",
         "type": "SMART",
+        "tag": "congé",
         "_version": 1,
         "standard_version": "1.3"
       });
       const chapter_abs_invent = await createChapter({
         "title": "Inventaire des congés",
         "type": "SMART",
+        "tag": "congé",
         "_version": 1,
         "standard_version": "1.3"
       });
       const chapter_abs_calc = await createChapter({
         "title": "Principe de calcul du solde dans le portail",
         "type": "SMART",
+        "tag": "congé",
         "_version": 1,
         "standard_version": "1.3"
       });
       const chapter_abs_sold = await createChapter({
         "title": "Affichage des soldes",
         "type": "SMART",
+        "tag": "congé",
         "_version": 1,
         "standard_version": "1.3"
       });
       const chapter_abs_val = await createChapter({
         "title": "Workflow de validation",
         "type": "SMART",
+        "tag": "congé",
         "_version": 1,
         "standard_version": "1.3"
       });
@@ -237,4 +250,14 @@ require('./app/routes/chapter.routes.js')(app);
 app.listen(3000, () => {
     console.log("Server is listening on port 3000");
 });
-run();
+
+app.get('/reset', (req, res) => {
+    Chapter.remove({}, function(err) {
+        console.log('Chapter collection removed')
+    });
+    VersionnedChapter.remove({}, function(err) {
+        console.log('Versionned chapter collection removed')
+    });
+    run();
+    res.json({"message": "Database reset"});
+});

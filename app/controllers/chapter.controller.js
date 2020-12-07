@@ -1,7 +1,8 @@
 const Chapter = require('../models/chapter.model.js');
 const mongoose = require('mongoose');
 const Schema = require("mongoose/lib/schema");
-const VersionnedChapter = mongoose.model('VersionnedChapter', new Schema({}), 'chapters.vermongo')
+const VersionnedChapter = require("../models/VersionnedChapter.model");
+
 
 // Create and Save a new chapter file
 exports.create = (req, res) => {
@@ -17,6 +18,7 @@ exports.create = (req, res) => {
     const chapter = new Chapter({
         title: req.body.title || "Untitled chapter file", 
         type: req.body.type,
+        tag: req.body.tag,
         version: req.body.version,
         standard_version: req.body.standard_version,
         topics          : req.body.topics
@@ -109,6 +111,7 @@ exports.update = (req, res) => {
         }
         chapter.title = req.body.title || "Untitled chapter file";
         chapter.type = req.body.type;
+        chapter.tag = req.body.tag;
         chapter.standard_version = req.body.standard_version;
         chapter.topics = req.body.topics;
         chapter.type = req.body.type;
