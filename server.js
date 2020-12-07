@@ -136,6 +136,138 @@ const run = async () => {
         "standard_version": "1.3"
       });
 
+
+      chapter_prime_excep.topics.push({
+        schema: {
+            fields : [
+                {
+                type : "checkbox",
+                label: "Client concerné ?",
+                model: "Client concerné ?",
+                default: true
+            }
+          ]
+        },
+        model: {
+          "Client concerné ?" : true
+        }
+        })
+      
+      chapter_prime_excep.topics.push({
+        schema: {
+            fields : [
+                {
+                type : "textArea",
+                label: "Type de déclenchement",
+                model: "Type de déclenchement",
+                default: true
+            }
+          ]
+        },
+        model: {
+          "Type de déclenchement" : "Tous les mois"
+        }
+        })
+      
+      chapter_prime_excep.topics.push({
+        schema: {
+            fields : [
+                {
+                type : "radios",
+                label: "type de saisie",
+                model: "type de saisie",
+                default: true,
+                values: [
+                  "Nombre",
+                  "Taux",
+                  "Montant",
+                ]
+            }
+          ]
+        },
+        model: {
+          "type de saisie" : "Montant"
+        }
+        })
+
+      chapter_prime_excep.topics.push({
+        schema: {
+            fields : [
+                {
+                type : "textArea",
+                label: "Population concernée",
+                model: "Population concernée",
+                default: true
+            }
+          ]
+        },
+        model: {
+          "Population concernée" : "Tous les hommes unijambistes"
+        }
+        })
+
+      chapter_prime_excep.topics.push({
+        schema: {
+            fields : [
+                {
+                type : "radios",
+                label: "Inclus dans la (les) base(s)",
+                model: "Inclus dans la (les) base(s)",
+                default: true,
+                values: [
+                  "Taux horaire",
+                  "Prime ancienneté",
+                  "1/10ème CP",
+                  "Prime 13ème mois",
+                  "Prime de Vacances",
+                ]
+            }
+          ]
+        },
+        model: {
+          "Inclus dans la (les) base(s)" : "1/10ème CP"
+        }
+        })  
+
+      chapter_prime_excep.topics.push({
+        schema: {
+            fields : [
+                {
+                type : "radios",
+                label: "Edition sur le bulletin",
+                model: "Edition sur le bulletin",
+                default: true,
+                values: [
+                  "Base",
+                  "Taux",
+                  "Montant",
+                  
+                ]
+            }
+          ]
+        },
+        model: {
+          "Edition sur le bulletin" : "Montant"
+        }
+        }) 
+        
+      chapter_prime_excep.topics.push({
+        schema: {
+            fields : [
+                {
+                type : "textArea",
+                label: "Commentaires",
+                model: "Commentaires",
+                default: true
+            }
+          ]
+        },
+        model: {
+          "Commentaires" : "C'était une très bonne expérience... I guess.."
+        }
+        })
+
+
         await chapter_prime.save();
         await chapter_conge.save();
         await chapter_abs.save();
