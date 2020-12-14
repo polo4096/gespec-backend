@@ -202,7 +202,7 @@ const run = async () => {
           ]
         },
         model: {
-          "Population concernée" : "Tous les hommes unijambistes"
+          "Population concernée" : "Tous les salariés ayant plus de 2 ans d'ancienneté."
         }
         })
 
@@ -263,7 +263,7 @@ const run = async () => {
           ]
         },
         model: {
-          "Commentaires" : "C'était une très bonne expérience... I guess.."
+          "Commentaires" : "Aucune remarque "
         }
         })
 
@@ -332,7 +332,7 @@ const run = async () => {
         ]
       },
       model: {
-        "Population concernée" : "Tous les hommes unijambistes"
+        "Population concernée" : "Tous les salariés"
       }
       })
 
@@ -393,7 +393,7 @@ const run = async () => {
         ]
       },
       model: {
-        "Commentaires" : "C'était une très bonne expérience... I guess.."
+        "Commentaires" : "Elligibilité à confirmer au prochain rendez-vous. Les stagiaires ne sont peut être pas concernés."
       }
       })
 
